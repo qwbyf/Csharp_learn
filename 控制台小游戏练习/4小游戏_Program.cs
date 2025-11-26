@@ -4,7 +4,25 @@
     {
         static void Main(string[] args)
         {
-                        #region 界面切换
+            #region 需求分析
+            //开始界面: 控制台显示和输入;字体变色;监听键盘(wasd等)切换选项(switch)
+            //游戏界面: 控制台显示和输入;字体变色;监听键盘(wasd等)操控;边界控制;战斗(随机数,循环,if条件,)
+            //结束界面: 控制台显示和输入;字体变色;监听键盘(wasd等)切换选项;
+            //界面切换
+            #endregion
+
+            #region 设置控制台
+            //清空界面
+            Console.Clear();
+            //隐藏光标
+            Console.CursorVisible = false;
+            //设置界面大小
+            int x=50; int y=30;
+            Console.SetWindowSize(x,y);
+            Console.SetBufferSize(x,y);
+            #endregion
+
+            #region 界面切换
             int nowscene_ID = 1;//                  scene 场景
             while (true)
             {
@@ -77,16 +95,16 @@
                     case 2:
                         Console.Clear();
                         #region 游戏场景
-                        ////一:不变: 周围的红墙                        
-                        Console.ForegroundColor=ConsoleColor.Red;
+                        #region 一: 周围不变的红墙
+                        Console.ForegroundColor = ConsoleColor.Red;
                         //上下
-                        for (int x0 = 0; x0 < x; x0+=2)
+                        for (int x0 = 0; x0 < x; x0 += 2)
                         {
                             Console.SetCursorPosition(x0, 0);
                             Console.Write("■");
-                            Console.SetCursorPosition(x0, y-1);
+                            Console.SetCursorPosition(x0, y - 1);
                             Console.Write("■");
-                            Console.SetCursorPosition(x0, y-6);
+                            Console.SetCursorPosition(x0, y - 6);
                             Console.Write("■");
                         }
                         //左右
@@ -94,13 +112,27 @@
                         {
                             Console.SetCursorPosition(0, y0);
                             Console.Write("■");
-                            Console.SetCursorPosition(x-2, y0);
+                            Console.SetCursorPosition(x - 2, y0);
                             Console.Write("■");
                         }
-
+                        #endregion
+                        #region 二: 设置boos属性
+                        string boos = "■";
+                        int boss_X = 24;
+                        int boss_Y = 15;
+                        Random r = new Random();//创建随机数对象
+                        int bossHP = 100;
+                        int bossATK = r.Next(7, 14);                        
+                        #endregion
                         while (true)
                         {
-
+                            //绘制boos (活着时才显示)
+                            if (bossHP > 0)
+                            {
+                                Console.SetCursorPosition(boss_X, boss_Y);
+                                Console.ForegroundColor = ConsoleColor.Green;
+                                Console.Write(boos);
+                            }                            
                         }
                         #endregion
                         break;
@@ -116,4 +148,3 @@
         }
     }
 }
-
