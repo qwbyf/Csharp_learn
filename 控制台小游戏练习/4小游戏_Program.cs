@@ -116,23 +116,94 @@
                             Console.Write("■");
                         }
                         #endregion
-                        #region 二: 设置boos属性
+                        #region 二: 设置boos和玩家的属性
                         string boos = "■";
                         int boss_X = 24;
                         int boss_Y = 15;
                         Random r = new Random();//创建随机数对象
-                        int bossHP = 100;
-                        int bossATK = r.Next(7, 14);                        
+                        int boss_HP = 100;
+                        int boss_ATK = r.Next(7, 14);
+
+                        string player = "●";
+                        int player_X = 4;
+                        int player_Y = 5;                        
+                        int player_HP = 100;
+                        int player_ATK = r.Next(8, 13);
                         #endregion
+                        //在循环外声明变量,储存玩家输入的内容 节约性能
+                        char player_input;
                         while (true)
                         {
-                            //绘制boos (活着时才显示)
-                            if (bossHP > 0)
+                            #region 绘制boos (活着时才显示)
+                            if (boss_HP > 0)
                             {
                                 Console.SetCursorPosition(boss_X, boss_Y);
                                 Console.ForegroundColor = ConsoleColor.Green;
                                 Console.Write(boos);
-                            }                            
+                            }
+                            #endregion
+                            #region 绘制玩家,响应移动指令
+                            Console.SetCursorPosition(player_X, player_Y);
+                            Console.ForegroundColor = ConsoleColor.Yellow;
+                            Console.Write(player);
+                            player_input = Console.ReadKey(true).KeyChar;//监听玩家输入
+                            //移动(切换帧)
+                            Console.SetCursorPosition(player_X, player_Y);
+                            Console.Write("  ");//擦除
+                            switch (player_input)
+                            {
+                                case 'W':
+                                case 'w':
+                                    player_Y--;
+                                    if (player_Y < 1)
+                                    {
+                                        player_Y = 1;
+                                    }
+                                    //当玩家与boss位置重合时
+                                    else if (player_X == boss_X && player_Y == boss_Y && boss_HP > 0)
+                                    {
+                                        player_Y++;
+                                    }
+                                    break;
+                                case 'S':
+                                case 's':
+                                    player_Y++;
+                                    if (player_Y > y - 7)
+                                    {
+                                        player_Y = y - 7;
+                                    }
+                                    else if (player_X == boss_X && player_Y == boss_Y && boss_HP > 0)
+                                    {
+                                        player_Y--;
+                                    }
+                                    break;
+                                case 'A':
+                                case 'a':
+                                    player_X -= 2;
+                                    if (player_X < 2)
+                                    {
+                                        player_X = 2;
+                                    }
+                                    else if (player_X == boss_X && player_Y == boss_Y && boss_HP > 0)
+                                    {
+                                        player_X += 2;
+                                    }
+                                    break;
+                                case 'D':
+                                case 'd':
+                                    player_X += 2;
+                                    if (player_X > x - 4)
+                                    {
+                                        player_X = x - 4;
+                                    }
+                                    else if (player_X == boss_X && player_Y == boss_Y && boss_HP > 0)
+                                    {
+                                        player_X -= 2;
+                                    }
+                                    break;
+                            }
+                            #endregion
+
                         }
                         #endregion
                         break;
